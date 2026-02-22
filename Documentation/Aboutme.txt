@@ -1,0 +1,1 @@
+AI localization is the use of artificial intelligence to adapt content such as video, audio, and text for different languages and cultures. It combines technologies like machine translation, speech recognition, and synthetic voice dubbing to deliver scalable and culturally relevant localized content.
