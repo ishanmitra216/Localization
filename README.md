@@ -1,396 +1,188 @@
-# Indoor Localization and Mapping System for Obstacle Detection using LiDAR and SLAM
-# Purpose
+# <span style="color:#2E86C1;">Indoor Collision Avoidance and Mapping System</span>  
+## <span style="color:#8E44AD;">Visual Odometry-Based (JetBot V2.0)</span>
 
-The purpose of this project is to design and develop an intelligent indoor localization system capable of:
+---
 
-Scanning indoor environments in real time
+## <span style="color:#117A65;">Authors</span>
 
-Creating accurate maps (Top view and Front view)
+<span style="color:#1F618D;"><strong>Ishan Mitra</strong></span>  
+AMC Engineering College, VTU  
+(Visvesvaraya Technological University)
 
-Detecting obstacles present in pathways
+<span style="color:#7D3C98;"><strong>Srikanth Nanda</strong></span>  
+Hochschule Emden/Leer  
+University of Applied Sciences
 
-Providing spatial awareness for navigation
+---
 
-Helping robots or assistive systems navigate safely indoors
+# <span style="color:#148F77;">1. Project Purpose</span>
 
-# This system is especially useful in environments where GPS does not work, such as:
+Design and develop a <span style="color:#C0392B;"><strong>real-time indoor collision avoidance and mapping system</strong></span> using:
 
-Hospitals
+- <span style="color:#2E86C1;">Monocular Camera</span>  
+- <span style="color:#8E44AD;">Visual Odometry (VO)</span>  
+- <span style="color:#D68910;">JetBot V2.0 (Jetson Nano platform)</span>  
+- <span style="color:#117A65;">ROS (Robot Operating System)</span>  
 
-Shopping malls
+## <span style="color:#AF601A;">Core Objectives</span>
 
-Airports
+- <span style="color:#1ABC9C;">Scan indoor environments in real time</span>  
+- <span style="color:#5B2C6F;">Estimate robot motion using Visual Odometry</span>  
+- <span style="color:#2874A6;">Generate a 2D top-view occupancy map</span>  
+- <span style="color:#C0392B;">Detect frontal obstacles</span>  
+- <span style="color:#CA6F1E;">Enable real-time collision avoidance</span>  
+- <span style="color:#196F3D;">Provide safe indoor navigation without GPS</span>  
 
-Warehouses
+---
 
-Smart homes
+# <span style="color:#2E86C1;">2. Target Environments (GPS-Denied)</span>
 
-Assistive systems for disabled individuals (related to your AccessRoute project domain)
+- Hospitals  
+- Shopping malls  
+- Airports  
+- Warehouses  
+- Smart homes  
+- Assistive navigation systems  
 
-# Introduction (What it Works)
-# Overview
+---
 
-Indoor localization refers to determining the position of an object or robot inside a building without using GPS.
+# <span style="color:#8E44AD;">3. System Overview</span>
 
-This project uses:
+Indoor localization is achieved using:
 
-Sensors (LiDAR / Depth camera / Ultrasonic)
+- <span style="color:#2E86C1;">Monocular Camera</span>  
+- <span style="color:#8E44AD;">Visual Odometry algorithms</span>  
+- <span style="color:#117A65;">ROS-based mapping</span>  
 
-SLAM algorithm (Simultaneous Localization and Mapping)
+The system performs three primary tasks:
 
-Processing unit (Raspberry Pi / Jetson Nano / Laptop)
+## <span style="color:#148F77;">Step 1: Visual Scanning</span>
 
-# Visualization software
+- Continuous image frame capture  
 
-The system performs three main tasks:
+## <span style="color:#6C3483;">Step 2: Motion Estimation (Visual Odometry)</span>
 
-Step 1: Scanning
+- ORB Feature Extraction  
+- Feature Matching (BFMatcher / FLANN)  
+- Essential Matrix Estimation  
+- Pose Recovery  
 
-Sensors scan surroundings and collect distance data from obstacles.
+## <span style="color:#C0392B;">Step 3: Mapping + Collision Avoidance</span>
 
-Step 2: Localization
+- 2D occupancy grid map generation  
+- Frontal obstacle detection  
+- Reactive avoidance control  
 
-The system calculates its current position inside the environment.
+---
 
-Step 3: Mapping
+# <span style="color:#D68910;">4. Working Principle</span>
 
-The system generates:
+```
+Input      → Camera Frames  
+Processing → Visual Odometry + Mapping  
+Output     → 2D Map + Robot Pose + Collision Avoidance  
+```
 
-Top view map (2D map)
+---
 
-Front view map (Obstacle view ahead)
+# <span style="color:#7D3C98;">5. Algorithms Used</span>
 
-# Working Principle
+## <span style="color:#2E86C1;">5.1 Visual Odometry</span>
 
-Input → Sensor Data
-Processing → SLAM Algorithm
-Output → Map + Obstacle Detection + Localization
+- ORB Feature Detection  
+- Feature Matching  
+- Essential Matrix Computation  
+- Relative Pose Estimation  
 
-Output Generated
+## <span style="color:#117A65;">5.2 Mapping</span>
 
-1. 2D Top view map
+- Occupancy Grid Mapping  
+- Free / Occupied / Unknown cell classification  
 
-2. Front view obstacle map
+## <span style="color:#C0392B;">5.3 Collision Avoidance</span>
 
-3. Real-time position tracking
+- Motion-based depth approximation  
+- Threshold-based obstacle detection  
+- Differential drive motion control  
 
-4. Obstacle distance detection
+---
 
+# <span style="color:#148F77;">6. Hardware Constraints (JetBot V2.0)</span>
 
-# Approaches, Algorithms, and Applications
-# Approach 1: LiDAR-Based SLAM
-Algorithm Used
+## <span style="color:#2E86C1;">Processing Unit</span>
 
-SLAM (Simultaneous Localization and Mapping)
+Jetson Nano  
+- Quad-core ARM CPU  
+- 4GB RAM  
+- 128-core Maxwell GPU  
+- 32GB microSD storage  
 
-Popular SLAM Algorithms:
+## <span style="color:#8E44AD;">Sensor</span>
 
-GMapping
+- Monocular Raspberry Pi Camera V2  
 
-Hector SLAM
+## <span style="color:#AF601A;">Mobility</span>
 
-Cartographer (Google)
+- 2 DC motors  
+- Integrated motor driver  
+- Differential drive system  
 
-ORB-SLAM
+## <span style="color:#196F3D;">Power Supply</span>
 
-RTAB-Map
+- 5V battery pack  
 
-Working
+---
 
-LiDAR sends laser beams → measures distance → builds environment map
+# <span style="color:#2E86C1;">7. Software Requirements</span>
 
-Advantages
+## <span style="color:#148F77;">Operating System</span>
 
-High accuracy
+Ubuntu 18.04 (Jetson Nano compatible)
 
-Reliable
+## <span style="color:#8E44AD;">Middleware</span>
 
-Works in low light
+ROS Melodic
 
-Applications
+## <span style="color:#117A65;">Libraries</span>
 
-Autonomous robots
+- OpenCV  
+- NumPy  
+- cv_bridge  
+- tf  
+- nav_msgs  
 
-Warehouse robots
+## <span style="color:#AF601A;">Visualization</span>
 
-Indoor navigation
+- RViz  
+- Gazebo (Simulation)  
 
-# Approach 2: Camera-Based Localization (Visual SLAM)
-# Algorithm Used
+---
 
-ORB-SLAM
+# <span style="color:#7D3C98;">8. Expected Output</span>
 
-Visual Odometry
+## <span style="color:#148F77;">Top View</span>
 
-Feature detection (ORB, SIFT, SURF)
+- 2D occupancy grid map  
+- Free space representation  
+- Obstacle representation  
+- Robot pose visualization  
 
-Working
+## <span style="color:#C0392B;">Front View</span>
 
-Camera captures images → detects features → builds map
+- Distance estimation of obstacles ahead  
+- Real-time collision warning  
 
-Advantages
+## <span style="color:#2E86C1;">Localization</span>
 
-Low cost
+- Continuous pose estimation  
+- Trajectory plotting  
 
-Works without LiDAR
+---
 
-Applications
+# <span style="color:#AF601A;">9. Applications</span>
 
-Mobile robots
-
-AR/VR systems
-
-Indoor navigation
-
-# Approach 3: Sensor Fusion Approach
-
-# Combines multiple sensors:
-
-LiDAR
-
-IMU
-
-Camera
-
-Uses:
-
-Extended Kalman Filter (EKF)
-
-Advantages:
-
-Higher accuracy
-
-More reliable
-
-Applications:
-
-Autonomous vehicles
-
-Advanced robots
-
-# Approach 4: Grid Mapping Algorithm
-
-# Creates occupancy grid map
-
-Map consists of:
-
-Free space
-
-Obstacle space
-
-Unknown space
-
-Applications:
-
-Robot navigation
-
-Path planning
-
-
-# Hardware Constraints (Specifications)
-Option 1: Recommended Hardware (Best)
-Processing Unit
-
-Jetson Nano / Raspberry Pi 4 / Laptop
-
-Specifications:
-
-CPU: Quad Core
-
-RAM: 4GB minimum (8GB recommended)
-
-Storage: 32GB minimum
-
-Sensor 1: LiDAR Sensor
-
-Example:
-
-RPLIDAR A1/A2
-
-Specifications:
-
-Range: 0.15m to 12m
-Accuracy: ±2cm
-Scan rate: 5–10 Hz
-Field of view: 360°
-
-Sensor 2: Depth Camera (Optional)
-
-Example:
-
-Intel RealSense D435
-
-Range: 0.2m to 10m
-
-Sensor 3: IMU Sensor
-
-Example:
-
-MPU6050
-
-Purpose:
-
-Orientation detection
-
-Power Supply
-
-Battery: 5V / 12V power supply
-
-Additional Hardware
-
-Robot chassis (optional)
-Motor driver (optional)
-Wheels (optional)
-
-5. Software Requirements
-
-Operating System:
-
-Ubuntu 20.04 or 22.04
-
-Software:
-
-ROS (Robot Operating System)
-
-Libraries:
-
-OpenCV
-
-SLAM libraries
-
-Python / C++
-
-Visualization tool:
-
-RViz
-
-6. System Architecture
-
-Flow:
-
-Sensor → ROS → SLAM Algorithm → Map Generation → Visualization
-
-Output:
-
-Top View Map
-Front View Map
-Obstacle Detection
-
-7. Expected Output
-
-The system will generate:
-
-Top View:
-
-2D grid map
-
-Shows obstacles and free paths
-
-Front View:
-
-Distance of obstacle ahead
-
-Useful for navigation
-
-Localization:
-
-Shows robot position on map
-
-8. Applications
-
-This system can be used in:
-
-Healthcare
-
-Wheelchair navigation
-
-Assistive robots
-
-Warehouses
-
-Autonomous robots
-
-Smart buildings
-
-Security robots
-
-Military
-
-Indoor reconnaissance
-
-Shopping malls
-
-Navigation assistance
-
-# PART 1: System Overview
-
-Goal:
-
-• Scan indoor environment
-• Detect obstacles
-• Generate map (Top view)
-• Detect front obstacles
-• Visualize in RViz
-• Simulate in Gazebo
-
-System:
-
-Sensor → ROS → SLAM → Map → Visualization
-
-
-# PART 2: Install Required Software
-Step 1: Install Ubuntu
-
-Recommended:
-Ubuntu 20.04
-
-# Step 2: Install ROS Noetic
-
-Open terminal:
-
-sudo apt update
-sudo apt install ros-noetic-desktop-full
-
-Initialize ROS:
-
-sudo rosdep init
-rosdep update
-
-Add ROS to bash:
-
-echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-
-# Step 3: Install Required Packages
-sudo apt install ros-noetic-slam-gmapping
-sudo apt install ros-noetic-navigation
-sudo apt install ros-noetic-turtlebot3*
-sudo apt install ros-noetic-gazebo-ros
-sudo apt install ros-noetic-rviz
-sudo apt install python3-pip
-pip3 install numpy matplotlib
-PART 3: Create ROS Workspace
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws
-catkin_make
-
-# Activate workspace:
-
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-# PART 4: Python Code – Obstacle Detection (Front View)
-Create package
-# Project Folder Structure
-catkin_ws/
- ├── src/
- │   ├── indoor_mapping/
- │   │   ├── scripts/
- │   │   │   ├── obstacle_detector.py
- │   │   ├── package.xml
- │   │   ├── CMakeLists.txt
-
-# Conclusion
-
-Conclusion Example:
-
-The Indoor Localization and Mapping System successfully detects obstacles and generates real-time top and front view maps using SLAM algorithms. This system can be used for autonomous navigation, assistive robotics, and smart indoor environments.
+- Indoor autonomous robots  
+- Assistive mobility systems  
+- Smart building navigation  
+- Warehouse automation  
+- Educational robotics
